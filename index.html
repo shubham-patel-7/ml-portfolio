@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shubham Patel – Machine Learning Projects</title>
+<meta name="description" content="Three end-to-end machine learning projects: engine predictive maintenance, network intrusion detection, and document Q&A with RAG.">
+<style>
+  :root {
+    --bg: #fafaf9; --surface: #ffffff; --text: #1c1917; --muted: #57534e;
+    --line: #e7e5e4; --accent: #1d4ed8; --accent-text: #ffffff; --chip: #eff6ff; --chip-text: #1e40af;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0c0a09; --surface: #1c1917; --text: #fafaf9; --muted: #a8a29e;
+      --line: #292524; --accent: #60a5fa; --accent-text: #0c0a09; --chip: #172554; --chip-text: #bfdbfe;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+  header { padding: 56px 0 24px; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); line-height: 1.15; margin: 0 0 12px; }
+  .lead { color: var(--muted); max-width: 62ch; margin: 0 0 20px; font-size: 1.05rem; }
+  .links a { margin-right: 18px; color: var(--accent); text-decoration: none; font-weight: 600; }
+  .links a:hover { text-decoration: underline; }
+  .project { background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    margin: 28px 0; overflow: hidden; display: grid; grid-template-columns: 1fr; }
+  @media (min-width: 820px) { .project { grid-template-columns: 1.05fr 1fr; } }
+  .project img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;
+    border-bottom: 1px solid var(--line); background: var(--line); max-height: 420px; }
+  @media (min-width: 820px) { .project img { border-bottom: 0; border-right: 1px solid var(--line); max-height: none; } }
+  .body { padding: 24px; }
+  .body h2 { margin: 0 0 6px; font-size: 1.35rem; }
+  .tag { color: var(--muted); margin: 0 0 14px; }
+  ul.facts { padding-left: 1.1rem; margin: 0 0 16px; }
+  ul.facts li { margin-bottom: 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; padding: 0; list-style: none; }
+  .chips li { background: var(--chip); color: var(--chip-text); border-radius: 999px; padding: 2px 10px; font-size: .82rem; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-block; padding: 8px 16px; border-radius: 8px; font-weight: 600; text-decoration: none;
+    border: 1px solid var(--accent); color: var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--accent-text); }
+  .btn:hover { opacity: .88; }
+  footer { color: var(--muted); font-size: .9rem; padding: 12px 0 56px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Shubham Patel</h1>
+    <p class="lead">Machine learning projects built end to end: data, models, honest evaluation, and a working app. Each project reports its limitations alongside its results.</p>
+    <p class="links"><a href="https://github.com/shubham-patel-7">GitHub profile</a></p>
+  </header>
+
+  <main>
+    <article class="project" id="engine-rul">
+      <img src="img/engine-rul.png" alt="Fleet-health dashboard showing predicted remaining useful life for a turbofan engine" loading="lazy">
+      <div class="body">
+        <h2>Engine Predictive Maintenance</h2>
+        <p class="tag">Predict remaining useful life of turbofan engines on NASA C-MAPSS and raise an alert in time.</p>
+        <ul class="facts">
+          <li>Random Forest, XGBoost and a 3-seed LSTM ensemble, split by engine to avoid leakage.</li>
+          <li>XGBoost RMSE 13.86; the LSTM ensemble is most accurate near failure (RMSE 3.99 within 30 cycles) and catches 23 of 25 real failures at a 30-cycle alert.</li>
+          <li>Paired bootstrap shows the overall model differences are not statistically clear, and the write-up says so.</li>
+          <li>Streamlit dashboard with replay slider and tunable alert thresholds.</li>
+        </ul>
+        <ul class="chips"><li>Python</li><li>PyTorch</li><li>XGBoost</li><li>scikit-learn</li><li>Streamlit</li></ul>
+        <div class="btns">
+          <a class="btn primary" href="https://github.com/shubham-patel-7/engine-rul-predictive-maintenance">Code and write-up</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" id="nsl-kdd">
+      <img src="img/nsl-kdd.png" alt="Streamlit app that flags suspicious network connections from an uploaded CSV" loading="lazy">
+      <div class="body">
+        <h2>Network Intrusion Detection (NSL-KDD)</h2>
+        <p class="tag">Can a model trained on known attacks catch new ones? ML versus deep learning under distribution shift.</p>
+        <ul class="facts">
+          <li>Logistic Regression, Random Forest, XGBoost and a PyTorch MLP on identical preprocessing, 3 seeds each.</li>
+          <li>Validation F1 of about 0.998 drops to 0.74 to 0.81 on the official test set, which holds 17 unseen attack types.</li>
+          <li>Models detect 71 to 81% of known attack types but only 31 to 42% of novel ones.</li>
+          <li>Upload a CSV of connection records in the Streamlit app and tune the alert threshold.</li>
+        </ul>
+        <ul class="chips"><li>Python</li><li>PyTorch</li><li>XGBoost</li><li>scikit-learn</li><li>Streamlit</li></ul>
+        <div class="btns">
+          <a class="btn primary" href="https://github.com/shubham-patel-7/nsl-kdd-intrusion-detection">Code and write-up</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" id="rag">
+      <img src="img/rag.png" alt="Document Q&A app answering a question with page-level citations" loading="lazy">
+      <div class="body">
+        <h2>Document Q&amp;A with RAG</h2>
+        <p class="tag">Ask questions about PDFs and get answers with the page they came from, plus an evaluation that measures retrieval quality.</p>
+        <ul class="facts">
+          <li>Hybrid retrieval: FAISS vectors and BM25 fused with Reciprocal Rank Fusion.</li>
+          <li>25 hand-labelled questions; hybrid MiniLM + BM25 puts the gold page in the top 3 for all 25 (Hit@3 1.00, MRR 0.95).</li>
+          <li>Pluggable answer backends: Claude, any OpenAI-compatible endpoint, or an offline extractive answerer.</li>
+          <li>Found and fixed a ranking bug the evaluation exposed, with a regression test.</li>
+        </ul>
+        <ul class="chips"><li>Python</li><li>FAISS</li><li>BM25</li><li>sentence-transformers</li><li>Streamlit</li></ul>
+        <div class="btns">
+          <a class="btn primary" href="https://github.com/shubham-patel-7/rag-document-qa">Code and write-up</a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer>Each repository's README lists its limitations and what I would improve next.</footer>
+</div>
+</body>
+</html>
